@@ -10,7 +10,7 @@
 #include<sstream>
 #include<fstream>
 #include<string>
-
+#include</single_include/nlohmann/json.hpp>
 using namespace std;
 
 
@@ -165,3 +165,62 @@ void registration(SOCKET ClientSocket)
 }
 
 
+
+// This function find the covid information of a particular country
+void exportCovidInfo(string file_name)
+{
+	nlohmann::json value;
+	string temp="";
+
+	ifstream file("file_out.json", ios::binary);
+	if (file.is_open() == false) {
+		cout << "Cannot open file";
+	}
+	else
+	{
+		getline(file, temp);
+	}
+	
+
+
+	stringstream ss(temp);
+	string jsonObject;
+	getline(ss, jsonObject, '[');
+	getline(ss, jsonObject, '}');
+	jsonObject += '}';
+	stringstream(jsonObject) >> value;
+
+
+
+	cout << endl;
+	string country="";
+	cout << "Input the country: ";
+	getline(cin, country);
+
+
+
+	while (jsonObject != "") {
+		getline(ss, jsonObject, ',');
+		if (jsonObject == "]") break;
+		getline(ss, jsonObject, '}');
+		jsonObject += '}';
+		stringstream(jsonObject) >> value;
+		if (country == value["country"]) 
+		{ cout << "Country: " << value["country"] << endl;
+			cout << "Cases: " << value["cases"] << endl;
+			cout << "Today cases: " << value["todayCases"] << endl;
+			cout << "Deaths: " << value["deaths"] << endl;
+			cout << "Today deaths: " << value["todayDeaths"] << endl;
+			cout << "Recovered: " << value["recovered"] << endl;
+			cout << "Active: " << value["active"] << endl;
+			cout << "Critical: " << value["critical"] << endl;
+			cout << "Cases per one million: " << value["casesPerOneMillion"] << endl;
+			cout << "Deaths per one million: " << value["DeathsPerOneMillion"] << endl;
+			cout << "Total test: " << value["totalTests"] << endl;
+			cout << "Test Per one million: " << value["testPerOneMillion"] << endl;
+		}
+	}
+
+
+	system("pause");
+}
