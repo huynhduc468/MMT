@@ -215,9 +215,9 @@ void exportCovidInfo(string file_name)
 			cout << "Active: " << value["active"] << endl;
 			cout << "Critical: " << value["critical"] << endl;
 			cout << "Cases per one million: " << value["casesPerOneMillion"] << endl;
-			cout << "Deaths per one million: " << value["DeathsPerOneMillion"] << endl;
+			cout << "Deaths per one million: " << value["deathsPerOneMillion"] << endl;
 			cout << "Total test: " << value["totalTests"] << endl;
-			cout << "Test Per one million: " << value["testPerOneMillion"] << endl;
+			cout << "Test Per one million: " << value["testsPerOneMillion"] << endl;
 		}
 	}
 
