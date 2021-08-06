@@ -35,6 +35,7 @@
 using namespace std;
 
 bool CheckLogIn(SOCKET ClientSocket);
+void registration(SOCKET ClientSocket);
 void TakeData();
 void exportCovidInfo(SOCKET ClientSocket, string path);
 DWORD WINAPI function(LPVOID arg);

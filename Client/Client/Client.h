@@ -21,6 +21,7 @@
 using namespace std;
 
 bool LogIn(SOCKET ConnectServer);
+void registration(SOCKET ConnectSocket);
 void DoSomeThing(SOCKET ConnectServer);
 
 #endif // !_CLIENT_H_
