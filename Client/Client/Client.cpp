@@ -1,19 +1,11 @@
 #include"Client.h"
 
-int main(int argc, char* argv[]) {
+int main() {
 	WSADATA wsaData;
 	SOCKET ConnectSocket = INVALID_SOCKET;
 	struct addrinfo* result = NULL, * ptr = NULL, hints;
-	const char* sendbuf = "Hi";
-	char recvbuf[DEFAULT_BUFLEN];
 	int iResult;
 	int recvbuflen = DEFAULT_BUFLEN;
-
-	// Validate the parameters
-	if (argc != 2) {
-		printf("usage: %s server-name\n", argv[0]);
-		return 1;
-	}
 
 	// Initialize Winsock
 	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -27,7 +19,7 @@ int main(int argc, char* argv[]) {
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = IPPROTO_TCP;
 
-	iResult = getaddrinfo(argv[1], PORT, &hints, &result);
+	iResult = getaddrinfo("127.0.0.1", PORT, &hints, &result);
 	if (iResult != 0) {
 		cout << "Getaddrinfo failed: " << iResult;
 		WSACleanup();
@@ -64,19 +56,7 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 
-
-	// Send an initial buffer
-	/*iResult = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
-	if (iResult == SOCKET_ERROR) {
-		printf("send failed: %d\n", WSAGetLastError());
-		closesocket(ConnectSocket);
-		WSACleanup();
-		return 1;
-	}
-
-	printf("Bytes Sent: %ld\n", iResult);*/
-
-	(LogIn(ConnectSocket) == 1) ? cout << "\nSuccessfully" : cout << "\nNotSeccessfully";
+	DoSomeThing(ConnectSocket);
 
 	// shutdown the connection for sending since no more data will be sent
 	// the client can still use the ConnectSocket for receiving data
@@ -87,23 +67,5 @@ int main(int argc, char* argv[]) {
 		WSACleanup();
 		return 1;
 	}
-
-
-	// Receive data until the server closes the connection
-	/*do {
-		iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-		if (iResult > 0)
-			printf("Bytes received: %d\n", iResult);
-		else if (iResult == 0)
-			printf("Connection closed\n");
-		else
-			printf("recv failed: %d\n", WSAGetLastError());
-		if (iResult == SOCKET_ERROR) {
-			printf("send failed: %d\n", WSAGetLastError());
-			closesocket(ConnectSocket);
-			WSACleanup();
-			return 1;
-		}
-	} while (iResult > 0);*/
 
 }

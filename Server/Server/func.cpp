@@ -1,9 +1,9 @@
 #include"Server.h"
 
+//Login
 bool CheckSame(string A, string B) {
 	return(A == B);
 }
-
 bool CheckLogIn(SOCKET ClientSocket) {
 	int uNameSize = 100, passSize = 100, isStop;
 	char iStop[1];
@@ -65,6 +65,53 @@ bool CheckLogIn(SOCKET ClientSocket) {
 			cout << iStop;
 		}
 	} while (iStop[0] == '1');
+
+	return 0;
+}
+
+//TakeData
+static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp)
+{
+	((std::string*)userp)->append((char*)contents, size * nmemb);
+	return size * nmemb;
+}
+void TakeData() {
+	CURL* curl;
+	CURLcode res;
+	std::string readBuffer;
+
+	curl_global_init(CURL_GLOBAL_DEFAULT);
+
+	curl = curl_easy_init();
+	if (curl) {
+		std::ofstream fout("output.json", std::ios_base::out);
+		curl_easy_setopt(curl, CURLOPT_URL, "https://coronavirus-19-api.herokuapp.com/countries");
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+		res = curl_easy_perform(curl);
+		curl_easy_cleanup(curl);
+
+		fout << readBuffer << std::endl;
+
+		fout.close();
+	}
+}
+
+DWORD WINAPI function(LPVOID arg) {
+	SOCKET* hConnected = (SOCKET*)arg;
+	SOCKET ClientSocket = *hConnected;
+
+	char dt[20] = { "0" };
+	recv(ClientSocket, dt, 20, 0);
+
+	if (dt[0] != '0') {
+		TakeData();
+		exportCovidInfo(ClientSocket, (string)dt);
+	}
+	else {
+		send(ClientSocket, "0", 1, 0);
+		cout << "\nFailed !!!";
+	}
 
 	return 0;
 }
