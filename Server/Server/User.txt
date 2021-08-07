@@ -1,2 +1,4 @@
 MinhTu0601,06012002
 HuynhDuc1201,12012002
+minhtu,0601
+tuminh,060102

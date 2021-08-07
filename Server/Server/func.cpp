@@ -5,67 +5,57 @@ bool CheckSame(string A, string B) {
 	return(A == B);
 }
 bool CheckLogIn(SOCKET ClientSocket) {
-	int uNameSize = 100, passSize = 100, isStop;
-	char iStop[1];
-	do {
-		char username[100] = { "0" }, password[100]{ "0" };
-		iStop[0] = { '0' };
-		cout << "\n1\n";
-		int isRecv = recv(ClientSocket, username, uNameSize, 0);
-		cout << username << endl;
-		if (isRecv != 0) {
-			cout << "\n2";
-			cout << endl << username << endl;
-			int temp = 0;
-			fstream fCheck("User.txt");
+	int uNameSize = 100, passSize = 100;
+	fstream fCheck("User.txt");
+	char username[100] = { "0" }, password[100] = { "0" };
+	int isRecv = recv(ClientSocket, username, uNameSize, 0);
+	if (isRecv != 0) {
+		int temp = 0;
 
-			stringstream line;
-			string tmp, uNameTmp, PassTmp;
+		stringstream line;
+		string tmp, uNameTmp, PassTmp;
 
-			while (getline(fCheck, tmp)) {
-				line.clear();
-				line.str(tmp);
-				getline(line, uNameTmp, ',');
-				getline(line, PassTmp, '\n');
-				if (CheckSame((string)username, uNameTmp) == 1) {
-					temp = 1;
-					send(ClientSocket, "1", 1, 0);
-					isRecv = recv(ClientSocket, password, passSize, 0);
-					cout << password << endl;
-					if (isRecv != 0) {
-						if (CheckSame((string)password, PassTmp) == 1) {
-							send(ClientSocket, "1", 1, 0);
-							isStop = recv(ClientSocket, iStop, 1, 0);
-							return 1;
-						}
-						else {
-							send(ClientSocket, "0", 1, 0);
-							isStop = recv(ClientSocket, iStop, 1, 0);
-							break;
-						}
+		while (getline(fCheck, tmp)) {
+			line.clear();
+			line.str(tmp);
+			getline(line, uNameTmp, ',');
+			getline(line, PassTmp, '\n');
+			if (CheckSame((string)username, uNameTmp) == 1) {
+				temp = 1;
+				send(ClientSocket, "1", 1, 0);
+				isRecv = recv(ClientSocket, password, passSize, 0);
+				if (isRecv != 0) {
+					if (CheckSame((string)password, PassTmp) == 1) {
+						send(ClientSocket, "1", 1, 0);
+						fCheck.close();
+						return 1;
 					}
 					else {
 						send(ClientSocket, "0", 1, 0);
-						isStop = recv(ClientSocket, iStop, 1, 0);
-						break;
+						fCheck.close();
+						return 0;
 					}
 				}
-			}
-			if (temp == 1) {
-				break;
-			}
-			else {
-				send(ClientSocket, "0", 1, 0);
-				isStop = recv(ClientSocket, iStop, 1, 0);
+				else {
+					send(ClientSocket, "0", 1, 0);
+					fCheck.close();
+					return 0;
+				}
 			}
 		}
-		else {
+		if (temp == 0) {
 			send(ClientSocket, "0", 1, 0);
-			isStop = recv(ClientSocket, iStop, 1, 0);
-			cout << iStop;
+			fCheck.close();
+			return 0;
 		}
-	} while (iStop[0] == '1');
+	}
+	else {
+		send(ClientSocket, "0", 1, 0);
+		fCheck.close();
+		return 0;
+	}
 
+	fCheck.close();
 	return 0;
 }
 
@@ -73,13 +63,9 @@ bool CheckLogIn(SOCKET ClientSocket) {
 void WriteToFile(string path, string username, string password)
 {
 	ofstream fout;
-	fout.open(path, ios::end);
-	if (fout.is_open() == false)
-	{
-		cout << "File User.txt cannot open" << endl;
-	}
-	else
-	{
+	fout.open(path, ios::app);
+	if (fout.is_open() == false) cout << "File User.txt cannot open" << endl;
+	else {
 		fout << username << "," << password;
 		fout << endl;
 	}
@@ -101,7 +87,6 @@ void sendRecvacc(SOCKET ClientSocket, string& username, string& password)
 	if (iResult < 0) cout << "receive message fail (username), error: " << WSAGetLastError();
 	msg[iResult] = '\0';
 	username = string(msg);
-
 
 	// Send msg and receive password from client
 	strcpy_s(msg, "Password: ");
@@ -126,10 +111,8 @@ bool checkInformation(string path, string username, string password)
 
 	//flag true if username, password exist.
 	bool flag = false;
-	if (fin.is_open() == false)
-	{
-		cout << "File User.txt cannot open" << endl;
-	}
+
+	if (fin.is_open() == false) cout << "File User.txt cannot open" << endl;
 	else
 	{
 		while (!fin.eof())
@@ -139,9 +122,9 @@ bool checkInformation(string path, string username, string password)
 			{
 				s = stringstream(str);
 				getline(s, temp, ',');
-				if (temp == username)
-				{
-					flag = true; break;
+				if (temp == username) {
+					flag = true;
+					break;
 				}
 				getline(s, temp, ',');
 				if (temp == password) {
@@ -182,10 +165,7 @@ void registration(SOCKET ClientSocket)
 
 
 	//Check if the account exist if yes then resend the message until the account is new !!
-	while (checkInformation(path, username, password) == true)
-	{
-		//Send message to client
-
+	while (checkInformation(path, username, password) == true) {
 		// Send message to client!
 		strcpy_s(msg, "Someone registered this account. Please create again! \n");
 		iResult = send(ClientSocket, msg, strlen(msg), 0);
@@ -193,11 +173,7 @@ void registration(SOCKET ClientSocket)
 			cout << "send failed with error: " << WSAGetLastError() << endl;
 
 		sendRecvacc(ClientSocket, username, password);
-
-
 	}
-
-
 
 	// Register successful. Write the new account into file User.txt
 	strcpy_s(msg, "false");
@@ -205,14 +181,12 @@ void registration(SOCKET ClientSocket)
 	if (iResult == SOCKET_ERROR)
 		cout << "send failed with error: " << WSAGetLastError() << endl;
 
-
 	strcpy_s(msg, "Your registration is successful!");
 	iResult = send(ClientSocket, msg, strlen(msg), 0);
 	if (iResult == SOCKET_ERROR)
 		cout << "send failed with error: " << WSAGetLastError() << endl;
 
 	WriteToFile(path, username, password);
-
 }
 
 //TakeData
@@ -247,16 +221,34 @@ DWORD WINAPI function(LPVOID arg) {
 	SOCKET* hConnected = (SOCKET*)arg;
 	SOCKET ClientSocket = *hConnected;
 
-	char dt[20] = { "0" };
-	recv(ClientSocket, dt, 20, 0);
-
-	if (dt[0] != '0') {
-		TakeData();
-		exportCovidInfo(ClientSocket, (string)dt);
-	}
-	else {
-		send(ClientSocket, "0", 1, 0);
-		cout << "\nFailed !!!";
+	char choosen[2] = { "0" };
+	recv(ClientSocket, choosen, 2, 0);
+	while (choosen[0] != '0') {
+		switch (choosen[0]) {
+		case '1':
+			if (CheckLogIn(ClientSocket) == 1) {
+				char ch[2] = { "0" };
+				recv(ClientSocket, ch, 2, 0);
+				switch (ch[0]) {
+				case '1':
+					do {
+						char dt[20] = { "0" };
+						recv(ClientSocket, dt, 20, 0);
+						TakeData();
+						exportCovidInfo(ClientSocket, (string)dt);
+						recv(ClientSocket, ch, 2, 0);
+					} while (ch[0] != '0');
+					break;
+				case '0':break;
+				}
+			}
+			break;
+		case '2':
+			registration(ClientSocket);
+			break;
+		case '0':break;
+		}
+		recv(ClientSocket, choosen, 2, 0);
 	}
 
 	return 0;

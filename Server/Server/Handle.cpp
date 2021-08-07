@@ -7,6 +7,7 @@ void exportCovidInfo(SOCKET ClientSocket, string path) {
 	ifstream file("output.json");
 	if (file.is_open() == false) {
 		cout << "Cannot open file";
+		send(ClientSocket, "0", 1, 0);
 		return;
 	}
 	else getline(file, temp);
@@ -88,9 +89,11 @@ void exportCovidInfo(SOCKET ClientSocket, string path) {
 			char* testPerOneMillion = (char*)tmp.c_str();
 			send(ClientSocket, testPerOneMillion, (int)strlen(testPerOneMillion), 0);
 
-			send(ClientSocket, "1", 1, 0);
+			file.close();
+			return;
 		}
 	}
 	send(ClientSocket, "0", 1, 0);
 	file.close();
+	return;
 }

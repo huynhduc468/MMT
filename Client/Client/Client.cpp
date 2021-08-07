@@ -55,8 +55,63 @@ int main() {
 		WSACleanup();
 		return 1;
 	}
-
-	DoSomeThing(ConnectSocket);
+	cout << "\t\tSEARCH INFORMATION ABOUT COVD-19 PASSION IN COUNTRIES IN THE WORLD\n";
+	cout << "_________________________________________________________________________________\n";
+	char choosen[2] = { '0' };
+	char tmp[100] = { "0" };
+	cout << "\t\t\t=============MENU=============\n";
+	cout << "\t\t\t\t1.Log in\n";
+	cout << "\t\t\t\t2.Registration\n";
+	cout << "\t\t\t\t0. Exit\n";
+	do {
+		cout << "Enter yout opt: ";
+		cin.getline(tmp, 100);
+	} while (strlen(tmp) >= 2 && (tmp[0] != '0' || tmp[0] != '1' || tmp[0] != '2'));
+	choosen[0] = tmp[0];
+	choosen[1] = '\n';
+	send(ConnectSocket, choosen, 2, 0);
+	while (choosen[0] == '1' || choosen[0] == '2') {
+		switch (choosen[0]) {
+		case '1':
+			if (LogIn(ConnectSocket) == 1) {
+				char ch[2] = { "0" };
+				cout << "\n\t\t\t=============MENU=============\n";
+				cout << "\t\t\t\t1. Search information\n";
+				cout << "\t\t\t\t0. Exit\n";
+				do {
+					cout << "Enter yout opt: ";
+					cin.getline(tmp, 100);
+				} while (strlen(tmp) >= 2 && (tmp[0] != '0' || tmp[0] != '1'));
+				ch[0] = tmp[0];
+				ch[1] = '\n';
+				send(ConnectSocket, ch, 2, 0);
+				switch (ch[0])
+				{
+				case '1':
+					DoSomeThing(ConnectSocket);
+					break;
+				case '0':break;
+				}
+			}
+			else cout << "Log in Failed !!!\n";
+			break;
+		case '2':
+			registration(ConnectSocket);
+			break;
+		case '0':break;
+		}
+		cout << "\t\t\t=============MENU=============\n";
+		cout << "\t\t\t\t1.Log in\n";
+		cout << "\t\t\t\t2.Registration\n";
+		cout << "\t\t\t\t0. Exit\n";
+		do {
+			cout << "Enter yout opt: ";
+			cin.getline(tmp, 100);
+		} while (strlen(tmp) >= 2 && (tmp[0] != '0' || tmp[0] != '1' || tmp[0] != '2'));
+		choosen[0] = tmp[0];
+		choosen[1] = '\n';
+		send(ConnectSocket, choosen, 2, 0);
+	}
 
 	// shutdown the connection for sending since no more data will be sent
 	// the client can still use the ConnectSocket for receiving data
