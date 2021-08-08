@@ -121,7 +121,7 @@ bool registration(SOCKET ClientSocket)
 	
 	string path = "User.txt";
 
-	if (checkInformation(path, username, password) == true)
+	if (checkInformation(path, username, password) == false)
 	{//Send message true to client to announce that the account existed.
 		strcpy_s(msg, "Your registration is successful!");
 		iResult = send(ClientSocket, msg, (int)strlen(msg), 0);
