@@ -105,7 +105,7 @@ bool checkInformation(string path, string username, string password)
 
 
 // Registration function client.
-void registration(SOCKET ClientSocket)
+bool registration(SOCKET ClientSocket)
 {
 	//Send message to client
 	char msg[DEFAULT_BUFLEN];
@@ -123,44 +123,23 @@ void registration(SOCKET ClientSocket)
 
 	if (checkInformation(path, username, password) == true)
 	{//Send message true to client to announce that the account existed.
-		strcpy_s(msg, "true");
-		iResult = send(ClientSocket, msg, strlen(msg), 0);
+		strcpy_s(msg, "Your registration is successful!");
+		iResult = send(ClientSocket, msg, (int)strlen(msg), 0);
 		if (iResult == SOCKET_ERROR)
 		cout << "send failed with error: " << WSAGetLastError() << endl;
-	}
-	
-	
-	//Check if the account exist if yes then resend the message until the account is new !!
-	while (checkInformation(path, username, password) == true)
-	{
-		//Send message to client
 
-		// Send message to client!
-		strcpy_s(msg, "Someone registered this account. Please create again! \n");
-		iResult = send(ClientSocket, msg, strlen(msg), 0);
+		WriteToFile(path, username, password);
+		return true;
+	}
+	else
+	{
+		strcpy_s(msg, "Someone used this account. Registration failed!");
+		iResult = send(ClientSocket, msg, (int)strlen(msg), 0);
 		if (iResult == SOCKET_ERROR)
 			cout << "send failed with error: " << WSAGetLastError() << endl;
-
-		sendRecvacc(ClientSocket, username, password);
-		
-
+		return false;
 	}
 
-	
-
-	// Register successful. Write the new account into file User.txt
-	strcpy_s(msg, "false");
-	iResult = send(ClientSocket, msg, strlen(msg), 0);
-	if (iResult == SOCKET_ERROR)
-		cout << "send failed with error: " << WSAGetLastError() << endl;
-
-
-	strcpy_s(msg, "Your registration is successful!");
-	iResult = send(ClientSocket, msg, strlen(msg), 0);
-	if (iResult == SOCKET_ERROR)
-		cout << "send failed with error: " << WSAGetLastError() << endl;
-
-	WriteToFile(path, username, password);
 
 }
 

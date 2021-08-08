@@ -35,7 +35,7 @@ extern "C" {
 
 #include "resource.h"
 bool checkInformation(string path, string username, string password);
-void registration(SOCKET ClientSocket);
+bool registration(SOCKET ClientSocket);
 void WriteToFile(string path, string username, string password);
 void sendRecvacc(SOCKET ClientSocket, string& username, string& password);
 
