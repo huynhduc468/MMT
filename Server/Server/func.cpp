@@ -203,3 +203,50 @@ void exportCovidInfo(string file_name)
 
 	system("pause");
 }
+
+// Announce and close all connection available
+
+bool closeConnection(SOCKET& ClientSocket)
+{
+	char msg[DEFAULT_BUFLEN];
+	int iResult;
+
+
+	strcpy_s(msg, "Server not working. Connection is closing...");
+	iResult = send(ClientSocket, msg, (int)strlen(msg), 0);
+	if (iResult == SOCKET_ERROR) {
+		cout << "Sending message failed: " << WSAGetLastError() << endl;
+		return false;
+	}
+
+
+
+
+	iResult = recv(ClientSocket, msg, DEFAULT_BUFLEN, 0);
+	if (iResult < 0)
+	{
+		cout << "Receiveing msg failed: " << WSAGetLastError() << endl;
+	}
+	msg[iResult] = '\0';
+
+
+	if (strcmp(msg, "OK") == true)
+	{
+		strcpy_s(msg, "ACK");
+		iResult = send(ClientSocket, msg, (int)strlen(msg), 0);
+		if (iResult == SOCKET_ERROR) {
+			cout << "Sending message failed: " << WSAGetLastError() << endl;
+			return false;
+		}
+	}
+
+	iResult = shutdown(ClientSocket, SD_SEND);
+	if (iResult == SOCKET_ERROR) {
+		printf("shutdown failed with error: %d\n", WSAGetLastError());
+		closesocket(ClientSocket);
+		WSACleanup();
+		return false;
+	}
+
+	return true;
+}

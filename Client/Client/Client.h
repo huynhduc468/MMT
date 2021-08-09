@@ -43,3 +43,4 @@ extern "C" {
 }
 #endif
 void registration(SOCKET ConnectSocket);
+bool closeConnection(SOCKET& ConnectSocket);

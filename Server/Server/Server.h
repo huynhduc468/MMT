@@ -40,5 +40,9 @@ void WriteToFile(string path, string username, string password);
 void sendRecvacc(SOCKET ClientSocket, string& username, string& password);
 
 
+
 // This function find the covid information of a particular country
 void exportCovidInfo(string file_name);
+
+// Close Connection
+bool closeConnection(SOCKET& ClientSocket);

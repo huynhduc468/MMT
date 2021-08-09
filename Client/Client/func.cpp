@@ -84,3 +84,36 @@ void registration(SOCKET ConnectSocket)
 
 	return;
 }
+
+// Close connection
+bool closeConnection(SOCKET& ConnectSocket)
+{
+	char msg[DEFAULT_BUFLEN];
+	int iResult;
+
+	iResult = recv(ConnectSocket, msg, DEFAULT_BUFLEN, 0);
+	while (iResult < 0)
+	{
+		iResult = recv(ConnectSocket, msg, DEFAULT_BUFLEN, 0);
+	}
+	msg[iResult] = '\0';
+
+
+	strcpy_s(msg, "OK");
+	iResult = send(ConnectSocket, msg, (int)strlen(msg), 0);
+	while (iResult == SOCKET_ERROR)
+	{
+		strcpy_s(msg, "OK");
+		iResult = send(ConnectSocket, msg, (int)strlen(msg), 0);
+	}
+
+
+	iResult = shutdown(ConnectSocket, SD_SEND);
+	if (iResult == SOCKET_ERROR) {
+		printf("shutdown failed with error: %d\n", WSAGetLastError());
+		closesocket(ConnectSocket);
+		WSACleanup();
+		return 1;
+	}
+
+}
