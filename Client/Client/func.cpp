@@ -40,8 +40,47 @@ void registration(SOCKET ConnectSocket)
 	iResult = recv(ConnectSocket, msg, DEFAULT_BUFLEN, 0);
 	if (iResult < 0) cout << "fail to receive, error: " << WSAGetLastError() << endl;
 	msg[iResult] = '\0';
+
 	cout << msg;
 	cout << endl;
+
+
+	cout << endl;
+
+	while (strcmp(msg, "true")==0)
+	{
+		// Receive message from server: 1."Registration" 2."Username" 3."Password"
+		iResult = recv(ConnectSocket, msg, DEFAULT_BUFLEN, 0);
+		if (iResult < 0) cout << "fail to receive, error: " << WSAGetLastError() << endl;
+		msg[iResult] = '\0';
+		cout << msg;
+		cout << endl;
+
+		// Receive and send again username & password
+		for (int i = 0;i < 2;i++)
+		{
+			iResult = recv(ConnectSocket, msg, DEFAULT_BUFLEN, 0);
+			if (iResult < 0) cout << "fail to receive , error: " << WSAGetLastError() << endl;
+			msg[iResult] = '\0';
+			cout << msg;
+			
+			cin.getline(msg, 100);
+			iResult = send(ConnectSocket, msg, strlen(msg), 0);
+			if (iResult == SOCKET_ERROR) cout << "fail to send msg , error: " <<WSAGetLastError() <<endl;
+		}
+
+		// Receive the result of register.
+		iResult = recv(ConnectSocket, msg, DEFAULT_BUFLEN, 0);
+		if (iResult < 0) cout << "fail to receive, error: " << WSAGetLastError() << endl;
+		msg[iResult] = '\0';
+	}
+	
+	// Receive annoucement successfull registration from server
+
+	iResult = recv(ConnectSocket, msg, DEFAULT_BUFLEN, 0);
+	if (iResult < 0) cout << "fail to receive, error: " << WSAGetLastError() << endl;
+	msg[iResult] = '\0';
+	cout << msg << endl;
 
 	return;
 }
