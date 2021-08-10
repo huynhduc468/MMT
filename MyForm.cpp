@@ -7,6 +7,6 @@ using namespace System::Windows::Forms;
 void main() {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
-	TestGUIClient::MyForm frm;
+	TestGUIServer::MyForm frm;
 	Application::Run(% frm);
 }
