@@ -327,6 +327,7 @@ namespace TestGUIServer {
 			recv(ClientSocket, tmp, 1, 0);
 		} while ((tmp[0] != '0'));
 	}
+	
 	private: System::Void exitButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (shutdown(ClientSocket, SD_SEND) == SOCKET_ERROR) {
 			MessageBox::Show("Shutdown failed with error: " + System::Convert::ToString(WSAGetLastError()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);

@@ -276,20 +276,22 @@ namespace TestGUIClient {
 			Panel->Show();
 		}
 
+
+
 	}
 	private: System::Void exitButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		send(ConnectSocket, "0", 1, 0);
 		Application::Exit();
 	}
 	private: System::Void signinButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		SignIn^ signIn = gcnew SignIn;
 		send(ConnectSocket, "1", 1, 0);
-		TestGUIClient::SignIn signin;
-		Application::Run(% signin);
+		signIn->Show();
 	}
 	private: System::Void signupButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		SignUp^ signUp = gcnew SignUp;
 		send(ConnectSocket, "2", 1, 0);
-		TestGUIClient::MyForm1 signup;
-		Application::Run(% signup);
+		signUp->Show();
 	}
 };
 }

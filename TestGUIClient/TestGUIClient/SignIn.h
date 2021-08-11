@@ -201,15 +201,15 @@ namespace TestGUIClient {
 		recv(ConnectSocket, isOk, 1, 0);
 		if (isOk[0] == '1') {
 			MessageBox::Show("Sign in successfully", "Notify", MessageBoxButtons::OK, MessageBoxIcon::Information);
-			Application::Exit();
+			Form::Close();
 		}
 		else {
 			MessageBox::Show("Sign in unsuccessful", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			Application::Exit();
+			Form::Close();
 		}
 	}
 	private: System::Void backButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		Application::Exit();
+		Form::Close();
 	}
 };
 }

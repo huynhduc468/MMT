@@ -13,10 +13,10 @@ namespace TestGUIClient {
 	/// <summary>
 	/// Summary for MyForm1
 	/// </summary>
-	public ref class MyForm1 : public System::Windows::Forms::Form
+	public ref class SignUp : public System::Windows::Forms::Form
 	{
 	public:
-		MyForm1(void)
+		SignUp(void)
 		{
 			InitializeComponent();
 			//
@@ -28,7 +28,7 @@ namespace TestGUIClient {
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~MyForm1()
+		~SignUp()
 		{
 			if (components)
 			{
@@ -60,7 +60,7 @@ namespace TestGUIClient {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm1::typeid));
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(SignUp::typeid));
 			this->signupPanel = (gcnew System::Windows::Forms::Panel());
 			this->backButton2 = (gcnew System::Windows::Forms::Button());
 			this->signupButton2 = (gcnew System::Windows::Forms::Button());
@@ -103,7 +103,7 @@ namespace TestGUIClient {
 			this->backButton2->TabIndex = 6;
 			this->backButton2->Text = L"Back";
 			this->backButton2->UseVisualStyleBackColor = true;
-			this->backButton2->Click += gcnew System::EventHandler(this, &MyForm1::backButton2_Click);
+			this->backButton2->Click += gcnew System::EventHandler(this, &SignUp::backButton2_Click);
 			// 
 			// signupButton2
 			// 
@@ -116,7 +116,7 @@ namespace TestGUIClient {
 			this->signupButton2->TabIndex = 5;
 			this->signupButton2->Text = L"Sign Up";
 			this->signupButton2->UseVisualStyleBackColor = true;
-			this->signupButton2->Click += gcnew System::EventHandler(this, &MyForm1::signupButton2_Click);
+			this->signupButton2->Click += gcnew System::EventHandler(this, &SignUp::signupButton2_Click);
 			// 
 			// passwordBox
 			// 
@@ -191,6 +191,7 @@ namespace TestGUIClient {
 			this->ResumeLayout(false);
 
 		}
+
 #pragma endregion
 	private: System::Void signupButton2_Click(System::Object^ sender, System::EventArgs^ e) {
 		string username = msclr::interop::marshal_as<std::string>(System::Convert::ToString(usernameBox->Text));
@@ -203,15 +204,18 @@ namespace TestGUIClient {
 		recv(ConnectSocket, isOk, 1, 0);
 		if (isOk[0] == 1) {
 			MessageBox::Show("Sign up successfully", "Notify", MessageBoxButtons::OK, MessageBoxIcon::Information);
-			Application::Exit();
+			Form::Close();
 		}
 		else {
 			MessageBox::Show("Sign up unsuccessful", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			Application::Exit();
+			Form::Close();
 		}
 	}
 	private: System::Void backButton2_Click(System::Object^ sender, System::EventArgs^ e) {
-		Application::Exit();
+		Form::Close();
 	}
+	
+
+
 };
 }
