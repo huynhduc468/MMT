@@ -1,0 +1,5 @@
+D:\Study\Year 1\TestGUIClient\TestGUIClient\x64\Debug\TestGUIClient.vcxproj.AssemblyReference.cache
+D:\Study\Year 1\TestGUIClient\TestGUIClient\x64\Debug\TestGUIClient.MyForm.resources
+D:\Study\Year 1\TestGUIClient\TestGUIClient\x64\Debug\TestGUIClient.vcxproj.GenerateResource.cache
+D:\Study\Year 1\TestGUIClient\TestGUIClient\x64\Debug\TestGUIClient.SignIn.resources
+D:\Study\Year 1\TestGUIClient\TestGUIClient\x64\Debug\TestGUIClient.SignUp.resources

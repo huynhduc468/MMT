@@ -1,4 +1,6 @@
 #include "MyForm.h"
+#include "SignUp.h"
+#include "SignUp.h"
 
 using namespace System;
 using namespace System::Windows::Forms;

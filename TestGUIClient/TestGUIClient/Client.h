@@ -20,9 +20,7 @@
 
 using namespace std;
 
-bool LogIn(SOCKET ConnectServer);
-void registration(SOCKET ConnectSocket);
-void DoSomeThing(SOCKET ConnectServer);
+static SOCKET ConnectSocket;
 
 #endif // !_CLIENT_H_
 

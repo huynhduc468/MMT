@@ -1,9 +1,9 @@
 #pragma once
 #include"Client.h"
+#include"SignIn.h"
+#include"SignUp.h"
 
 namespace TestGUIClient {
-
-	static SOCKET ConnectSocket;
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -21,6 +21,7 @@ namespace TestGUIClient {
 		MyForm(void)
 		{
 			InitializeComponent();
+			Panel->Hide();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -43,7 +44,11 @@ namespace TestGUIClient {
 	private: System::Windows::Forms::TextBox^ IPBox;
 	private: System::Windows::Forms::Button^ connectButton;
 	private: System::Windows::Forms::Button^ exitButton;
-
+	private: System::Windows::Forms::Panel^ Panel;
+	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::Button^ signupButton;
+	private: System::Windows::Forms::Button^ signinButton;
 	private:
 		/// <summary>
 		/// Required designer variable.
@@ -63,6 +68,12 @@ namespace TestGUIClient {
 			this->IPBox = (gcnew System::Windows::Forms::TextBox());
 			this->connectButton = (gcnew System::Windows::Forms::Button());
 			this->exitButton = (gcnew System::Windows::Forms::Button());
+			this->Panel = (gcnew System::Windows::Forms::Panel());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->signupButton = (gcnew System::Windows::Forms::Button());
+			this->signinButton = (gcnew System::Windows::Forms::Button());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->Panel->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -120,6 +131,65 @@ namespace TestGUIClient {
 			this->exitButton->UseVisualStyleBackColor = true;
 			this->exitButton->Click += gcnew System::EventHandler(this, &MyForm::exitButton_Click);
 			// 
+			// Panel
+			// 
+			this->Panel->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Panel.BackgroundImage")));
+			this->Panel->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->Panel->Controls->Add(this->label4);
+			this->Panel->Controls->Add(this->signupButton);
+			this->Panel->Controls->Add(this->signinButton);
+			this->Panel->Controls->Add(this->label3);
+			this->Panel->Location = System::Drawing::Point(2, 2);
+			this->Panel->Name = L"Panel";
+			this->Panel->Size = System::Drawing::Size(837, 470);
+			this->Panel->TabIndex = 5;
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label4->Location = System::Drawing::Point(95, 122);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(702, 29);
+			this->label4->TabIndex = 3;
+			this->label4->Text = L"Welcome to the application to look up information about covid-19";
+			// 
+			// signupButton
+			// 
+			this->signupButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->signupButton->Location = System::Drawing::Point(581, 226);
+			this->signupButton->Name = L"signupButton";
+			this->signupButton->Size = System::Drawing::Size(157, 83);
+			this->signupButton->TabIndex = 2;
+			this->signupButton->Text = L"Sign Up";
+			this->signupButton->UseVisualStyleBackColor = true;
+			this->signupButton->Click += gcnew System::EventHandler(this, &MyForm::signupButton_Click);
+			// 
+			// signinButton
+			// 
+			this->signinButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->signinButton->Location = System::Drawing::Point(149, 226);
+			this->signinButton->Name = L"signinButton";
+			this->signinButton->Size = System::Drawing::Size(157, 83);
+			this->signinButton->TabIndex = 1;
+			this->signinButton->Text = L"Sign In";
+			this->signinButton->UseVisualStyleBackColor = true;
+			this->signinButton->Click += gcnew System::EventHandler(this, &MyForm::signinButton_Click);
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label3->Location = System::Drawing::Point(143, 48);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(595, 32);
+			this->label3->TabIndex = 0;
+			this->label3->Text = L"Covid-19 epidemic information in countries";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -129,6 +199,7 @@ namespace TestGUIClient {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(838, 472);
+			this->Controls->Add(this->Panel);
 			this->Controls->Add(this->exitButton);
 			this->Controls->Add(this->connectButton);
 			this->Controls->Add(this->IPBox);
@@ -136,6 +207,8 @@ namespace TestGUIClient {
 			this->Controls->Add(this->label1);
 			this->Name = L"MyForm";
 			this->Text = L"Client";
+			this->Panel->ResumeLayout(false);
+			this->Panel->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -198,11 +271,25 @@ namespace TestGUIClient {
 			WSACleanup();
 			Application::Exit();
 		}
-		else MessageBox::Show("Connect Successfully !!!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		else {
+			MessageBox::Show("Connect Successfully !!!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			Panel->Show();
+		}
 
 	}
 	private: System::Void exitButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		send(ConnectSocket, "0", 1, 0);
 		Application::Exit();
 	}
-	};
+	private: System::Void signinButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		send(ConnectSocket, "1", 1, 0);
+		TestGUIClient::SignIn signin;
+		Application::Run(% signin);
+	}
+	private: System::Void signupButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		send(ConnectSocket, "2", 1, 0);
+		TestGUIClient::MyForm1 signup;
+		Application::Run(% signup);
+	}
+};
 }
