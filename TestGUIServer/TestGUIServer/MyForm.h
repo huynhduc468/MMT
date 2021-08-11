@@ -132,6 +132,7 @@ namespace TestGUIServer {
 			Application::Exit();
 		}
 
+	//	do{
 		ZeroMemory(&hints, sizeof(hints));
 		hints.ai_family = AF_INET;
 		hints.ai_socktype = SOCK_STREAM;
@@ -162,26 +163,34 @@ namespace TestGUIServer {
 
 		freeaddrinfo(result);
 
-		if (listen(ListenSocket, SOMAXCONN) == SOCKET_ERROR) {
-			MessageBox::Show("Listen failed with error: " + System::Convert::ToString(WSAGetLastError()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			closesocket(ListenSocket);
-			WSACleanup();
-			Application::Exit();
-		}
+		SOCKET* ClientSocket = new SOCKET[5];
+		for (int i = 0;i < 5;i++) {
+			if (listen(ListenSocket, 5) == SOCKET_ERROR) {
+				MessageBox::Show("Listen failed with error: " + System::Convert::ToString(WSAGetLastError()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				closesocket(ListenSocket);
+				WSACleanup();
+				Application::Exit();
+			}
 
-		ClientSocket = accept(ListenSocket, NULL, NULL);
-		if (ClientSocket == INVALID_SOCKET) {
-			MessageBox::Show("Accept failed: " + System::Convert::ToString(WSAGetLastError()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			closesocket(ListenSocket);
-			WSACleanup();
-			Application::Exit();
+			ClientSocket[i] = accept(ListenSocket, NULL, NULL);
+			if (ClientSocket[i] == INVALID_SOCKET) {
+				MessageBox::Show("Accept failed: " + System::Convert::ToString(WSAGetLastError()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				closesocket(ListenSocket);
+				WSACleanup();
+				Application::Exit();
+			}
 		}
+			closesocket(ListenSocket);
+			for (int i=0;i<5;i++)
+			TestGUIServer::MyForm::Execution(ClientSocket[i]);
 
-		closesocket(ListenSocket);
-		MyForm exe;
-		SOCKET* hConnected = new SOCKET();
-		*hConnected = ClientSocket;
-		threadStatus = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)(exe.Execution(ClientSocket)), hConnected, 0, &threadID);
+
+			delete[] ClientSocket;
+		//	MyForm exe;
+		//	SOCKET* hConnected = new SOCKET();
+		//	*hConnected = ClientSocket;
+		//	threadStatus = CreateThread(NULL, 0, &MyForm::Execution, hConnected, 0, &threadID);
+		//} while (1);
 	}
 	};
 }
