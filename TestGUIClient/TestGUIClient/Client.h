@@ -10,6 +10,7 @@
 #include<Windows.h>
 #include<iostream>
 #include <msclr\marshal_cppstd.h>
+#include<thread>
 
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")

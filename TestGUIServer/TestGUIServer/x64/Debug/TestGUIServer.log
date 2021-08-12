@@ -1,0 +1,11 @@
+﻿  Search.cpp
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIServer\TestGUIServer\Server.h(44,44): warning C4273: 'freeaddrinfo': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\Ws2tcpip.h(399,1): message : see previous definition of 'freeaddrinfo'
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIServer\TestGUIServer\Server.h(47,21): warning C4273: 'getaddrinfo': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\Ws2tcpip.h(121,1): message : see previous definition of 'getaddrinfo'
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIServer\TestGUIServer\Server.h(50,21): warning C4273: 'getnameinfo': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\Ws2tcpip.h(501,1): message : see previous definition of 'getnameinfo'
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIServer\TestGUIServer\Server.h(51,41): warning C4273: 'inet_pton': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\Ws2tcpip.h(573,1): message : see previous definition of 'inet_pton'
+  MyForm.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  TestGUIServer.vcxproj -> D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIServer\x64\Debug\TestGUIServer.exe

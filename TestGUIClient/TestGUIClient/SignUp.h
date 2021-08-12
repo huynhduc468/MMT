@@ -189,7 +189,6 @@ namespace TestGUIClient {
 			this->signupPanel->ResumeLayout(false);
 			this->signupPanel->PerformLayout();
 			this->ResumeLayout(false);
-
 		}
 
 #pragma endregion
@@ -199,10 +198,11 @@ namespace TestGUIClient {
 		string password = msclr::interop::marshal_as<std::string>(System::Convert::ToString(passwordBox->Text));
 		char* Pass = (char*)password.c_str();
 		send(ConnectSocket, Acc, strlen(Acc), 0);
+		this_thread::sleep_for(0.5s);
 		send(ConnectSocket, Pass, strlen(Pass), 0);
 		char isOk[1] = { '0' };
 		recv(ConnectSocket, isOk, 1, 0);
-		if (isOk[0] == 1) {
+		if (isOk[0] == '1') {
 			MessageBox::Show("Sign up successfully", "Notify", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			Form::Close();
 		}
@@ -214,8 +214,5 @@ namespace TestGUIClient {
 	private: System::Void backButton2_Click(System::Object^ sender, System::EventArgs^ e) {
 		Form::Close();
 	}
-	
-
-
 };
 }

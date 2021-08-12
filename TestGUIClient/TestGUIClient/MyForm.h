@@ -275,22 +275,19 @@ namespace TestGUIClient {
 			MessageBox::Show("Connect Successfully !!!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			Panel->Show();
 		}
-
-
-
 	}
 	private: System::Void exitButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		send(ConnectSocket, "0", 1, 0);
 		Application::Exit();
 	}
 	private: System::Void signinButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		SignIn^ signIn = gcnew SignIn;
 		send(ConnectSocket, "1", 1, 0);
+		SignIn^ signIn = gcnew SignIn;
 		signIn->Show();
 	}
 	private: System::Void signupButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		SignUp^ signUp = gcnew SignUp;
 		send(ConnectSocket, "2", 1, 0);
+		SignUp^ signUp = gcnew SignUp;
 		signUp->Show();
 	}
 };

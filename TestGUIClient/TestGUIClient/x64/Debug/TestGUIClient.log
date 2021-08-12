@@ -1,0 +1,16 @@
+﻿  MyForm.cpp
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\Client.h(31,44): warning C4273: 'freeaddrinfo': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\ws2tcpip.h(399,1): message : see previous definition of 'freeaddrinfo'
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\Client.h(34,21): warning C4273: 'getaddrinfo': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\ws2tcpip.h(121,1): message : see previous definition of 'getaddrinfo'
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\Client.h(37,21): warning C4273: 'getnameinfo': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\ws2tcpip.h(501,1): message : see previous definition of 'getnameinfo'
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\Client.h(38,41): warning C4273: 'inet_pton': inconsistent dll linkage
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\ws2tcpip.h(573,1): message : see previous definition of 'inet_pton'
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\SignIn.h(338,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\SignIn.h(341,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\SignIn.h(363,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\SignUp.h(200,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\SignUp.h(202,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  MyForm.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  TestGUIClient.vcxproj -> D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\x64\Debug\TestGUIClient.exe

@@ -1,9 +1,10 @@
-#pragma once
+﻿#pragma once
 #include "Server.h"
 
 namespace TestGUIServer {
 
 	static SOCKET ClientSocket = INVALID_SOCKET;
+	static SOCKET ListenSocket = INVALID_SOCKET;
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -51,9 +52,9 @@ namespace TestGUIServer {
 	private: bool CheckSame(string A, string B) {
 		return(A == B);
 	}
-	public: bool Execution(SOCKET ClientSocket) {
+	public: bool LognIn() {
 		char acc[100] = { "0" }, pass[100] = { "0" };
-		fstream fCheck("User.txt");
+		fstream fCheck("User.txt", ios_base::in);
 		int isResult = recv(ClientSocket, acc, 100, 0);
 		if (isResult != 0) {
 			int temp = 0;
@@ -107,7 +108,8 @@ namespace TestGUIServer {
 	private: void WriteToFile(string path, string username, string password) {
 		ofstream fout;
 		fout.open(path, ios::app);
-		if (fout.is_open() == false) MessageBox::Show("File User.txt cannot open", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		if (fout.is_open() == false)
+			MessageBox::Show("File User.txt cannot open", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		else {
 			fout << username << "," << password;
 			fout << endl;
@@ -142,7 +144,7 @@ namespace TestGUIServer {
 		fin.close();
 		return flag;
 	}
-	public: void registration(SOCKET ClientSocket) {
+	public: void registration() {
 		char acc[DEFAULT_BUFLEN] = { "0" }, pass[DEFAULT_BUFLEN] = { "0" };
 		int iResult = 0;
 		string username = "", password = "";
@@ -150,7 +152,7 @@ namespace TestGUIServer {
 		recv(ClientSocket, acc, DEFAULT_BUFLEN, 0);
 		username = string(acc);
 		recv(ClientSocket, pass, DEFAULT_BUFLEN, 0);
-		username = string(pass);
+		password = string(pass);
 
 		string path = "User.txt";
 
@@ -237,17 +239,13 @@ namespace TestGUIServer {
 			this->Text = L"Server";
 			this->ResumeLayout(false);
 			this->PerformLayout();
-
 		}
 #pragma endregion
 
 	private: System::Void openButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		ifstream fin("User.txt", ios_base::in);
-		fin.close();
 		WSADATA wsaData;
 		int iResult;
 
-		SOCKET ListenSocket = INVALID_SOCKET;
 		DWORD threadID;
 		HANDLE threadStatus;
 
@@ -314,14 +312,22 @@ namespace TestGUIServer {
 
 		char tmp[1] = { '0' };
 		recv(ClientSocket, tmp, 1, 0);
-		MyForm exe;
 		do {
 			switch (tmp[0]) {
 			case '1':
-				exe.Execution(ClientSocket);
+				if (MyForm::LognIn() == 1) {
+					char country[20] = { "0" };
+					recv(ClientSocket, country, 20, 0);
+					if (country[0] == '0') break;
+					else {
+						string CountryTmp = string(country);
+						exportCovidInfo(ClientSocket, CountryTmp);
+						break;
+					}
+				}
 				break;
 			case '2':
-				exe.registration(ClientSocket);
+				MyForm::registration();
 				break;
 			}
 			recv(ClientSocket, tmp, 1, 0);
@@ -330,14 +336,20 @@ namespace TestGUIServer {
 	
 	private: System::Void exitButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (shutdown(ClientSocket, SD_SEND) == SOCKET_ERROR) {
-			MessageBox::Show("Shutdown failed with error: " + System::Convert::ToString(WSAGetLastError()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			if (shutdown(ListenSocket, SD_SEND) == SOCKET_ERROR) {
+				MessageBox::Show("Shutdown failed with error: " + System::Convert::ToString(WSAGetLastError()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				closesocket(ListenSocket); 
+				WSACleanup();
+				Application::Exit();
+			}
+			/*MessageBox::Show("Shutdown failed with error: " + System::Convert::ToString(WSAGetLastError()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			closesocket(ClientSocket);
-			WSACleanup();
-			Application::Exit();
+			WSACleanup();*/
 		}
 		MessageBox::Show("Server closed !!!", "Notify", MessageBoxButtons::OK, MessageBoxIcon::Information);
 
 		// cleanup
+		closesocket(ListenSocket);
 		closesocket(ClientSocket);
 		WSACleanup();
 		Application::Exit();
