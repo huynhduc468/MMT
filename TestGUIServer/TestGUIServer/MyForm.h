@@ -310,14 +310,16 @@ namespace TestGUIServer {
 
 		closesocket(ListenSocket);
 
+		TakeData();
+
 		char tmp[1] = { '0' };
 		recv(ClientSocket, tmp, 1, 0);
 		do {
 			switch (tmp[0]) {
 			case '1':
 				if (MyForm::LognIn() == 1) {
-					char country[20] = { "0" };
-					recv(ClientSocket, country, 20, 0);
+					char country[40] = { "0" };
+					recv(ClientSocket, country, 40, 0);
 					if (country[0] == '0') break;
 					else {
 						string CountryTmp = string(country);
@@ -329,6 +331,18 @@ namespace TestGUIServer {
 			case '2':
 				MyForm::registration();
 				break;
+			case '0':
+				if (shutdown(ClientSocket, SD_SEND) == SOCKET_ERROR) {
+					if (shutdown(ListenSocket, SD_SEND) == SOCKET_ERROR) {
+						MessageBox::Show("Shutdown failed with error: " + System::Convert::ToString(WSAGetLastError()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+						WSACleanup();
+						Application::Exit();
+					}
+				}
+				MessageBox::Show("Server closed !!!", "Notify", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				closesocket(ClientSocket);
+				WSACleanup();
+				Application::Exit();
 			}
 			recv(ClientSocket, tmp, 1, 0);
 		} while ((tmp[0] != '0'));
@@ -338,19 +352,15 @@ namespace TestGUIServer {
 		if (shutdown(ClientSocket, SD_SEND) == SOCKET_ERROR) {
 			if (shutdown(ListenSocket, SD_SEND) == SOCKET_ERROR) {
 				MessageBox::Show("Shutdown failed with error: " + System::Convert::ToString(WSAGetLastError()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				closesocket(ListenSocket); 
+				closesocket(ListenSocket);
 				WSACleanup();
 				Application::Exit();
 			}
-			/*MessageBox::Show("Shutdown failed with error: " + System::Convert::ToString(WSAGetLastError()), "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			closesocket(ClientSocket);
-			WSACleanup();*/
 		}
 		MessageBox::Show("Server closed !!!", "Notify", MessageBoxButtons::OK, MessageBoxIcon::Information);
 
 		// cleanup
 		closesocket(ListenSocket);
-		closesocket(ClientSocket);
 		WSACleanup();
 		Application::Exit();
 	}

@@ -49,6 +49,7 @@ namespace TestGUIClient {
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Button^ signupButton;
 	private: System::Windows::Forms::Button^ signinButton;
+	private: System::Windows::Forms::Button^ exitButton1;
 	private:
 		/// <summary>
 		/// Required designer variable.
@@ -73,6 +74,7 @@ namespace TestGUIClient {
 			this->signupButton = (gcnew System::Windows::Forms::Button());
 			this->signinButton = (gcnew System::Windows::Forms::Button());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->exitButton1 = (gcnew System::Windows::Forms::Button());
 			this->Panel->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -135,6 +137,7 @@ namespace TestGUIClient {
 			// 
 			this->Panel->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Panel.BackgroundImage")));
 			this->Panel->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->Panel->Controls->Add(this->exitButton1);
 			this->Panel->Controls->Add(this->label4);
 			this->Panel->Controls->Add(this->signupButton);
 			this->Panel->Controls->Add(this->signinButton);
@@ -159,7 +162,7 @@ namespace TestGUIClient {
 			// 
 			this->signupButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->signupButton->Location = System::Drawing::Point(581, 226);
+			this->signupButton->Location = System::Drawing::Point(368, 226);
 			this->signupButton->Name = L"signupButton";
 			this->signupButton->Size = System::Drawing::Size(157, 83);
 			this->signupButton->TabIndex = 2;
@@ -189,6 +192,18 @@ namespace TestGUIClient {
 			this->label3->Size = System::Drawing::Size(595, 32);
 			this->label3->TabIndex = 0;
 			this->label3->Text = L"Covid-19 epidemic information in countries";
+			// 
+			// exitButton1
+			// 
+			this->exitButton1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->exitButton1->Location = System::Drawing::Point(579, 226);
+			this->exitButton1->Name = L"exitButton1";
+			this->exitButton1->Size = System::Drawing::Size(157, 83);
+			this->exitButton1->TabIndex = 4;
+			this->exitButton1->Text = L"Exit";
+			this->exitButton1->UseVisualStyleBackColor = true;
+			this->exitButton1->Click += gcnew System::EventHandler(this, &MyForm::exitButton1_Click);
 			// 
 			// MyForm
 			// 
@@ -289,6 +304,10 @@ namespace TestGUIClient {
 		send(ConnectSocket, "2", 1, 0);
 		SignUp^ signUp = gcnew SignUp;
 		signUp->Show();
+	}
+	private: System::Void exitButton1_Click(System::Object^ sender, System::EventArgs^ e) {
+		send(ConnectSocket, "0", 1, 0);
+		Application::Exit();
 	}
 };
 }

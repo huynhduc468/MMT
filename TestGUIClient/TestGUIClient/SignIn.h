@@ -11,6 +11,7 @@ namespace TestGUIClient {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+
 	/// <summary>
 	/// Summary for SignIn
 	/// </summary>
@@ -53,22 +54,6 @@ namespace TestGUIClient {
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Button^ backButton2;
 	private: System::Windows::Forms::Button^ searchButton;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private:
 		/// <summary>
 		/// Required designer variable.
@@ -358,10 +343,11 @@ namespace TestGUIClient {
 		Form::Close();
 	}
 	private: System::Void searchButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		string tmp = msclr::interop::marshal_as<std::string>(System::Convert::ToString(comboBox1->SelectedValue));
+		MessageBox::Show(System::Convert::ToString(comboBox1->SelectedItem));
+		string tmp = msclr::interop::marshal_as<std::string>(comboBox1->SelectedItem->ToString());
 		char* country = (char*)tmp.c_str();
 		send(ConnectSocket, country, strlen(country), 0);
-		MessageBox::Show(System::Convert::ToString(country), "Notify",MessageBoxButtons::OK);
+		this_thread::sleep_for(0.1s);
 		char msg[1] = { '0' };
 		recv(ConnectSocket, msg, 1, 0);
 		if (msg[0] == '1') {

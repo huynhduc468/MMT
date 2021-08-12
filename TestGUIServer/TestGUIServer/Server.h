@@ -34,6 +34,7 @@
 
 using namespace std;
 
+void TakeData();
 void exportCovidInfo(SOCKET ClientSocket, string path);
 
 #endif // !_SERVER_H_
