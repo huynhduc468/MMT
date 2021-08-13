@@ -1,6 +1,0 @@
-D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\x64\Debug\TestGUIClient.MyForm.resources
-D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\x64\Debug\TestGUIClient.SignIn.resources
-D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\x64\Debug\TestGUIClient.SignUp.resources
-D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\x64\Debug\TestGUIClient.vcxproj.GenerateResource.cache
-D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\x64\Debug\TestGUIClient.vcxproj.AssemblyReference.cache
-D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIClient\TestGUIClient\x64\Debug\TestGUIClient.Search.resources
