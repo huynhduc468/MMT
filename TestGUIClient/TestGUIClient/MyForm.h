@@ -70,11 +70,11 @@ namespace TestGUIClient {
 			this->connectButton = (gcnew System::Windows::Forms::Button());
 			this->exitButton = (gcnew System::Windows::Forms::Button());
 			this->Panel = (gcnew System::Windows::Forms::Panel());
+			this->exitButton1 = (gcnew System::Windows::Forms::Button());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->signupButton = (gcnew System::Windows::Forms::Button());
 			this->signinButton = (gcnew System::Windows::Forms::Button());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->exitButton1 = (gcnew System::Windows::Forms::Button());
 			this->Panel->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -147,6 +147,18 @@ namespace TestGUIClient {
 			this->Panel->Size = System::Drawing::Size(837, 470);
 			this->Panel->TabIndex = 5;
 			// 
+			// exitButton1
+			// 
+			this->exitButton1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->exitButton1->Location = System::Drawing::Point(579, 226);
+			this->exitButton1->Name = L"exitButton1";
+			this->exitButton1->Size = System::Drawing::Size(157, 83);
+			this->exitButton1->TabIndex = 4;
+			this->exitButton1->Text = L"Exit";
+			this->exitButton1->UseVisualStyleBackColor = true;
+			this->exitButton1->Click += gcnew System::EventHandler(this, &MyForm::exitButton1_Click);
+			// 
 			// label4
 			// 
 			this->label4->AutoSize = true;
@@ -193,18 +205,6 @@ namespace TestGUIClient {
 			this->label3->TabIndex = 0;
 			this->label3->Text = L"Covid-19 epidemic information in countries";
 			// 
-			// exitButton1
-			// 
-			this->exitButton1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->exitButton1->Location = System::Drawing::Point(579, 226);
-			this->exitButton1->Name = L"exitButton1";
-			this->exitButton1->Size = System::Drawing::Size(157, 83);
-			this->exitButton1->TabIndex = 4;
-			this->exitButton1->Text = L"Exit";
-			this->exitButton1->UseVisualStyleBackColor = true;
-			this->exitButton1->Click += gcnew System::EventHandler(this, &MyForm::exitButton1_Click);
-			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -220,6 +220,7 @@ namespace TestGUIClient {
 			this->Controls->Add(this->IPBox);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
 			this->Name = L"MyForm";
 			this->Text = L"Client";
 			this->Panel->ResumeLayout(false);
@@ -296,12 +297,10 @@ namespace TestGUIClient {
 		Application::Exit();
 	}
 	private: System::Void signinButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		send(ConnectSocket, "1", 1, 0);
 		SignIn^ signIn = gcnew SignIn;
 		signIn->Show();
 	}
 	private: System::Void signupButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		send(ConnectSocket, "2", 1, 0);
 		SignUp^ signUp = gcnew SignUp;
 		signUp->Show();
 	}

@@ -122,8 +122,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Execution.cpp" />
     <ClCompile Include="MyForm.cpp" />
-    <ClCompile Include="Search.cpp" />
+    <ClCompile Include="Searchcpp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server.h" />

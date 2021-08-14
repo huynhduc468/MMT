@@ -193,6 +193,7 @@ namespace TestGUIClient {
 
 #pragma endregion
 	private: System::Void signupButton2_Click(System::Object^ sender, System::EventArgs^ e) {
+		send(ConnectSocket, "2", 1, 0);
 		string username = msclr::interop::marshal_as<std::string>(System::Convert::ToString(usernameBox->Text));
 		char* Acc = (char*)username.c_str();
 		string password = msclr::interop::marshal_as<std::string>(System::Convert::ToString(passwordBox->Text));

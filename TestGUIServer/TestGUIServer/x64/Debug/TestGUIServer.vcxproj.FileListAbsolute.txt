@@ -1,0 +1,3 @@
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIServer\TestGUIServer\x64\Debug\TestGUIServer.vcxproj.AssemblyReference.cache
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIServer\TestGUIServer\x64\Debug\TestGUIServer.MyForm.resources
+D:\Study\Year 1\Semeter 3\Mạng máy tính\MMT-Duc\MMT-Duc\TestGUIServer\TestGUIServer\x64\Debug\TestGUIServer.vcxproj.GenerateResource.cache
