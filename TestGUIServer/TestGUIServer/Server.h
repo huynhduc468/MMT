@@ -15,6 +15,7 @@
 #include "curl/curl.h"
 #include <fstream>
 #include <thread>
+#include <ctime>
 
 #ifdef _DEBUG
 #pragma comment (lib,"curl/libcurl_a_debug.lib")
@@ -40,6 +41,7 @@ static SOCKET ListenSocket = INVALID_SOCKET;
 void TakeData();
 void exportCovidInfo(SOCKET ClientSocket, string path);
 DWORD WINAPI function(LPVOID arg);
+void Execution();
 
 #endif // !_SERVER_H_
 

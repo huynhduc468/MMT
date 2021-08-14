@@ -2,7 +2,7 @@
 
 using namespace System;
 using namespace System::Windows::Forms;
-[STAThreadAttribute]
+//[STAThreadAttribute]
 
 void main() {
 	Application::EnableVisualStyles();
